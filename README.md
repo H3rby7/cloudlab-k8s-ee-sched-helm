@@ -1,6 +1,16 @@
 # Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark
 
+- [Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark](#cloudlab-kubernetes-energy-efficient-scheduler-benchmark)
+  - [Usage](#usage)
+- [Developing](#developing)
+
+## Usage
+
 Helm chart to run with [this cloudlab profile](https://github.com/H3rby7/cloudlab-k8s-ee-sched)
+
+      helm repo add ee-sched https://h3rby7.github.io/cloudlab-k8s-ee-sched-helm
+      helm repo update
+      helm install my-release ee-sched/cloud-ee-bench
 
 Automates the following process:
 
@@ -10,9 +20,6 @@ Automates the following process:
 3. [Run Trace CSV](https://github.com/H3rby7/muBench-csv-runner)
    1. Calls the service cells using microservice call graphs
    2. Each service cell consumes resources ([example](https://github.com/H3rby7/cloudlab-k8s-ee-sched-functions))
-
-- [Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark](#cloudlab-kubernetes-energy-efficient-scheduler-benchmark)
-- [Developing](#developing)
 
 # Developing
 
