@@ -1,5 +1,7 @@
 # Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark
 
+[See github pages](https://h3rby7.github.io/cloudlab-k8s-ee-sched-helm/)
+
 - [Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark](#cloudlab-kubernetes-energy-efficient-scheduler-benchmark)
   - [Usage](#usage)
 - [Developing](#developing)
