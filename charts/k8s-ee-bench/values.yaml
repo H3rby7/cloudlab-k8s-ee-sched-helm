@@ -2,75 +2,177 @@
 nameOverride: ""
 fullnameOverride: ""
 
+# Information about the resources
+# These values are used to calculate the resource requests/limits of the service-cells and the amount of stress they apply with each REST call
+# see: https://github.com/H3rby7/muBench-svc-cell
 resources:
+
+  # The resources provided by the hosting kubernetes cluster
   cluster:
+    # Count of nodes that run the service-cells
     node_count: 10
+    # How many cpu cores does the cluster have in total
     nodes_total_cpu_cores: 100
+    # How much memory (in megabytes) cores does the cluster have in total
     nodes_total_memory_mbytes: 160000
+
+  # Target resource utilization
+  # May be taken from resource consumption of actual node data
   node_target_utilization:
+    # Mean CPU utilization strived for
     mean_cpu: 0.2006
+    # Mean MEMORY utilization strived for
     mean_memory: 0.2708
+
+  # Kubernetes resource requests of the service-cell representing the minimal resource consumption
+  # see: https://github.com/H3rby7/muBench-svc-cell
+  # These values are also taken to revert the MIN-MAX scaling
   service_cell:
     base_cpu: 20
     base_memory: 60
 
+# The cloudlab profile expects one node to serve as 'observer'
+# see https://github.com/H3rby7/cloudlab-k8s-ee-sched
+# This observer node runs the metric collection and the trace runner
 node_roles:
   # the node that provides input dataset at '/dataset'
   # and provides svc-cell functions at '/internal-svc-functions'
   # and provides provides room for result at '/result'
   observer: node-2
 
+# Benchmark parameters
 benchmark:
+
+  # Target namespace where the service-cells reside
   namespace: mubench
+
+  # Domain to be used for service FQDN
   cluster_domain: cluster
+
+  # Internal DNS resolver
   dns_resolver: kube-dns.kube-system.svc.cluster.local
+
+  # Scheduler reference to be tested
   scheduler: default-scheduler
+
+  # The CSV runner deploys services over the entire experiment time.
+  # To ensure services are running, they are deployed X seconds before they are first required
+  # see https://github.com/H3rby7/cloudlab-k8s-ee-sched-data/blob/main/2774/deployment_ts.tsv
   deployment_headstart_seconds: 30
 
+  # The service cell acts as pseudo-service creating stress on the system
+  # see: https://github.com/H3rby7/muBench-svc-cell
   service_cell:
+
+    # Templating factors to create kubernetes specifications
+    # see: https://github.com/H3rby7/muBench-k8s-templater
     template:
+
+      # Service cell docker image and version
       image:
         name: lujoka/mub-cell
         version: 0.1.1
+
+      # Replica count for each service-cell
+      # Note: As of now the replica count is the same for all service-cells
       replicas: 1
+
+      # Create an ingress to work with nginx-ingress controller
       ingress: false
+
+      # Create a service monitor to be scraped by prometheus
       service_monitor: true
+
+    # API path for trace-based REST calls
     api_path: /api/v1
+
+    # Gunicorn Web Server parameters
     gunicorn:
       workers: 4
       threads: 16
+
+    # Parameters used by the workmodel generator to configure the loader function
+    # see: https://github.com/H3rby7/muBench-workmodel-gen
+    # Note that only CPU and MEMORY are individual for each service
     loader:
+
+      # Workmodel-Gen calculates CPU for the loader function by using the mean CPU and confidence intervals.
+      # The results are scaled by 'factor_cpu' to fit into the range as expected by the loader function.
+      # The higher the value, the more decimals of PI are calculated, stressing the CPU more.
+      # see: https://github.com/H3rby7/cloudlab-k8s-ee-sched-functions/blob/main/Loader.py
       factor_cpu: 5.0
+
+      # How many threads in parallel are executing the CPU stress job
       thread_pool_size: 1
+
+      # How many CPU stress job calculation iterations are executed
       trials: 1
+
+      # Workmodel-Gen calculates MEMORY for the loader function by using the mean MEMORY and confidence intervals.
+      # The results are scaled by 'factor_memory' to fit into the range as expected by the loader function.
+      # The higher the value, the larger the memory size used in stressing.
+      # see: https://github.com/H3rby7/cloudlab-k8s-ee-sched-functions/blob/main/Loader.py
       factor_memory: 5.0
+
+      # How many iterations of READ/WRITE are executed in the MEMORY stress job
       memory_io: 500
+
+      # How many blocks are written (and read later) to stress the disk
       disk_write_block_count: 1000
+
+      # How big are the blocks on the disk
       disk_write_block_size: 1024
+
+      # Average response size of the REST calls
       mean_response_size: 11
 
+# Runner parameters
+# see https://github.com/H3rby7/muBench-csv-runner
 runner:
+
+  # Runner docker image name and version
   image:
     name: lujoka/mub-csv-runner
     version: latest
+
+  # Extra arguments (e.g. log level)
+  # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-csv-runner%20add_argument&type=code
   extraArgs:
     - "--log-level"
     - "INFO"
+
+  # Thread count to deploy and call the service-cells
   threadpool_size: 10
+
+  # Runner is a kubernetes Job, to keep metrics available the exit command is delayed by 10 hours.
   ttlMinutesAfterFinished: 600
 
+# Workmodel Generator parameters
+# see https://github.com/H3rby7/muBench-workmodel-gen
 workmodel_gen:
+
+  # Workmodel Generator docker image name and version
   image:
     name: lujoka/mub-workmodel-gen
     version: latest
+
+  # Extra arguments (e.g. log level)
+  # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-workmodel-gen%20add_argument&type=code
   extraArgs:
     - "--log-level"
     - "DEBUG"
 
+# Templater parameters
+# see https://github.com/H3rby7/muBench-k8s-templater
 templater:
+
+  # Templater docker image name and version
   image:
     name: lujoka/mub-k8s-templater
     version: latest
+
+  # Extra arguments (e.g. log level)
+  # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-k8s-templater%20add_argument&type=code
   extraArgs:
     - "--log-level"
     - "DEBUG"
