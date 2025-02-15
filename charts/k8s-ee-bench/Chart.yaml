@@ -1,6 +1,7 @@
 apiVersion: v2
 name: cloud-ee-bench
-description: A Helm chart for Kubernetes
+description: |
+    Helm chart for Cloudlab Kubernetes Energy-Efficient Scheduler Benchmark
 
 # A chart can be either an 'application' or a 'library' chart.
 #
