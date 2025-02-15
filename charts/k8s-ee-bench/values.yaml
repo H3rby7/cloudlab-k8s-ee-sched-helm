@@ -15,7 +15,7 @@ resources:
     nodes_total_cpu_cores: 100
     # How much memory (in megabytes) cores does the cluster have in total
     nodes_total_memory_mbytes: 160000
-  
+
   # Target resource utilization
   # May be taken from resource consumption of actual node data
   node_target_utilization:
@@ -72,7 +72,7 @@ benchmark:
       image:
         name: lujoka/mub-cell
         version: 0.1.1
-      
+
       # Replica count for each service-cell
       # Note: As of now the replica count is the same for all service-cells
       replicas: 1
@@ -140,7 +140,7 @@ runner:
   extraArgs:
     - "--log-level"
     - "INFO"
-  
+
   # Thread count to deploy and call the service-cells
   threadpool_size: 10
 
