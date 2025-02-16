@@ -12,12 +12,15 @@ data:
           "ServiceGraph": {
             "filePath":"/dataset/service_graphs.json"
           },
-          "ServiceRessources": {
+          "ServiceResources": {
             "filePath":"/dataset/min_max_normalized_service_metrics.csv",
             "csvDelimiter": "\t"
           },
-          "ClusterRessources": {
-            "filePath":"/resources/cluster_ressources.json"
+          "TargetResourceMeans": {
+            "filePath":"/dataset/target_resource_means.json"
+          },
+          "ClusterResources": {
+            "filePath":"/resources/cluster_resources.json"
           },
           "Output": {
             "directory":"/podshared",

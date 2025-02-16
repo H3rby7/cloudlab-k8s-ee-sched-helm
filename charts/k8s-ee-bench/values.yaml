@@ -16,14 +16,6 @@ resources:
     # How much memory (in megabytes) cores does the cluster have in total
     nodes_total_memory_mbytes: 160000
 
-  # Target resource utilization
-  # May be taken from resource consumption of actual node data
-  node_target_utilization:
-    # Mean CPU utilization strived for
-    mean_cpu: 0.2006
-    # Mean MEMORY utilization strived for
-    mean_memory: 0.2708
-
   # Kubernetes resource requests of the service-cell representing the minimal resource consumption
   # see: https://github.com/H3rby7/muBench-svc-cell
   # These values are also taken to revert the MIN-MAX scaling
@@ -154,7 +146,7 @@ workmodel_gen:
   # Workmodel Generator docker image name and version
   image:
     name: lujoka/mub-workmodel-gen
-    version: 0.1.0
+    version: 1.0.0
 
   # Extra arguments (e.g. log level)
   # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-workmodel-gen%20add_argument&type=code
