@@ -71,7 +71,7 @@ benchmark:
       # Service cell docker image and version
       image:
         name: lujoka/mub-cell
-        version: 0.1.1
+        version: 0.2.0
 
       # Replica count for each service-cell
       # Note: As of now the replica count is the same for all service-cells
@@ -133,7 +133,7 @@ runner:
   # Runner docker image name and version
   image:
     name: lujoka/mub-csv-runner
-    version: latest
+    version: 0.1.0
 
   # Extra arguments (e.g. log level)
   # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-csv-runner%20add_argument&type=code
@@ -154,7 +154,7 @@ workmodel_gen:
   # Workmodel Generator docker image name and version
   image:
     name: lujoka/mub-workmodel-gen
-    version: latest
+    version: 0.1.0
 
   # Extra arguments (e.g. log level)
   # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-workmodel-gen%20add_argument&type=code
@@ -169,7 +169,7 @@ templater:
   # Templater docker image name and version
   image:
     name: lujoka/mub-k8s-templater
-    version: latest
+    version: 0.1.0
 
   # Extra arguments (e.g. log level)
   # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-k8s-templater%20add_argument&type=code
