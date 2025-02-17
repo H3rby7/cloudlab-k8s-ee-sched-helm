@@ -125,7 +125,7 @@ runner:
   # Runner docker image name and version
   image:
     name: lujoka/mub-csv-runner
-    version: 0.2.0
+    version: 0.2.1
 
   # Extra arguments (e.g. log level)
   # see https://github.com/search?q=repo%3AH3rby7%2FmuBench-csv-runner%20add_argument&type=code
