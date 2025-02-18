@@ -49,7 +49,8 @@ data:
           "Kubernetes": {
             "replicas": {{ .Values.benchmark.service_cell.template.replicas }},
             "base_cpu": {{ .Values.resources.service_cell.base_cpu }},
-            "base_memory": {{ .Values.resources.service_cell.base_memory }}
+            "base_memory": {{ .Values.resources.service_cell.base_memory }},
+            "set_resource_limits": {{ .Values.resources.service_cell.set_resource_limits }}
           }
       }
     }
