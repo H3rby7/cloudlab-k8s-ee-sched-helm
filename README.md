@@ -9,7 +9,8 @@ Helm chart to run with [this cloudlab profile](https://github.com/H3rby7/cloudla
 
       helm repo add ee-sched https://h3rby7.github.io/cloudlab-k8s-ee-sched-helm
       helm repo update
-      helm install my-release ee-sched/cloud-ee-bench
+      helm inspect ee-sched/cloud-ee-bench
+      helm install cl-exp ee-sched/cloud-ee-bench
 
 Automates the following process:
 
